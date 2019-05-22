@@ -1,0 +1,63 @@
+{
+    "repos": [
+        {
+            "name": "nim-rlp",
+            "label": "Nim-RLP",
+            "location": "https://github.com/status-im/nim-rlp",
+            "update": true,
+            "frontMatter": {
+                "sidebar": "auto"
+            },
+            "tags": ["formatting", "encoding", "stable"],
+            "description": "Chronicles is a library for structured logging. It adheres to the philosophy that log files shouldn't be based on formatted text strings, but rather on well-defined event records with arbitrary properties that are easy to read for both humans and machines."
+        },
+        {
+            "name": "nim-chronicles",
+            "label": "Chronicles",
+            "location": "https://github.com/status-im/nim-chronicles",
+            "update": true,
+            "frontMatter": {
+                "sidebar": "auto"
+            },
+            "tags": ["logging", "stable"],
+            "description": "A Nim implementation of the Recursive Length Prefix encoding (RLP) as specified in the Ethereum's [Yellow Papper](https://ethereum.github.io/yellowpaper/paper.pdf) and [Wiki](https://github.com/ethereum/wiki/wiki/RLP)."
+        },
+        {
+            "name": "nimcrypto",
+            "label": "Nimcrypto",
+            "location": "https://github.com/cheatfate/nimcrypto",
+            "update": false,
+            "tags": ["cryptography", "development"],
+            "description": "Nimcrypto is Nim's cryptographic library. It implements several popular cryptographic algorithms and their tests with some [examples](https://github.com/cheatfate/nimcrypto/tree/master/examples)."
+        },
+        {
+            "name": "nim-chronos",
+            "label": "Chronos",
+            "location": "https://github.com/status-im/nim-chronos",
+            "update": true,
+            "tags": ["async", "stable"],
+            "description": "Chronos is an efficient library for asynchronous programming and an alternative to Nim's asyncdispatch.",
+            "frontMatter": {
+                "sidebar": "auto"
+            }
+        }
+    ],
+    "tags": {
+        "formatting": {
+        },
+        "encoding": {
+        },
+        "cryptography": {
+        },
+        "logging": {
+        },
+        "stable": {    
+        },
+        "development": {
+            "type": "warn"
+        },
+        "async": {
+        }
+    },
+    "separators": ["## Introduction|##Intro", "## Contributing", "|"]
+}

@@ -1,0 +1,4 @@
+docgen/.vuepress/dist
+docgen/yarn.lock
+docgen/README.md
+docgen/node_modules/*

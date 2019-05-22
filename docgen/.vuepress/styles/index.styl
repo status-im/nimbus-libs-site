@@ -1,0 +1,33 @@
+$mainOrange = #ff9c00
+
+.navbar
+    background-color: $mainOrange
+    .site-name
+        color: white
+    .links
+        color: white
+        background-color: $mainOrange
+        a:hover, a.router-link-active {
+            border-bottom-color: white;
+            color: white;
+        }
+        .nav-dropdown
+            color: black
+
+.theorem
+  margin 1rem 0
+  padding .1rem 1.5rem
+  border-bottom: 1px solid silver
+  .title
+    font-weight bold
+    font-size: x-large
+    a
+        color: black
+        text-decoration: underline
+
+.custom-block
+  &.right
+    color transparentify($textColor, 0.4)
+    font-size 0.9rem
+    text-align right
+
