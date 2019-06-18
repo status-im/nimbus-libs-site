@@ -4,6 +4,26 @@ const request = require('request');
 const fs = require('fs');
 
 module.exports = {
+    extendCli (cli) {
+
+
+
+        
+        cli
+          .command('foocommand [targetDir]', '')
+          .option('--debug', 'display info in debug mode')
+          .action((dir = '.') => {
+            console.log('Display info of your website')
+          });
+
+        cli
+          .command('barcommand [targetDir]', '')
+          .option('--debug', 'display info in debug mode')
+          .action((dir = '.') => {
+            console.log('Display info of your website 2')
+          });
+    },
+
     ready () {
         console.log("Initializing library docs fetching");
 

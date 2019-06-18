@@ -9,7 +9,7 @@
                 "sidebar": "auto"
             },
             "tags": ["formatting", "encoding", "stable"],
-            "description": "Chronicles is a library for structured logging. It adheres to the philosophy that log files shouldn't be based on formatted text strings, but rather on well-defined event records with arbitrary properties that are easy to read for both humans and machines."
+            "description": "A Nim implementation of the Recursive Length Prefix encoding (RLP) as specified in the Ethereum's [Yellow Papper](https://ethereum.github.io/yellowpaper/paper.pdf) and [Wiki](https://github.com/ethereum/wiki/wiki/RLP)."
         },
         {
             "name": "nim-chronicles",
@@ -20,7 +20,8 @@
                 "sidebar": "auto"
             },
             "tags": ["logging", "stable"],
-            "description": "A Nim implementation of the Recursive Length Prefix encoding (RLP) as specified in the Ethereum's [Yellow Papper](https://ethereum.github.io/yellowpaper/paper.pdf) and [Wiki](https://github.com/ethereum/wiki/wiki/RLP)."
+            "description": "Chronicles is a library for structured logging. It adheres to the philosophy that log files shouldn't be based on formatted text strings, but rather on well-defined event records with arbitrary properties that are easy to read for both humans and machines."
+
         },
         {
             "name": "nimcrypto",
