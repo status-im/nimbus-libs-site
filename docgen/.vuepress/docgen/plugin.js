@@ -85,7 +85,8 @@ module.exports = {
                     readmeBody = "# " + repos[i].label + "\n\n" + readmeBody.split(es)[0];
 
                     console.log("Fixing images");
-                    readmeBody = readmeBody.replace(/\!\[(.*)\]\((.*)\)/igm, function (match, g1, g2) {
+                    // Apply only to local images in repo
+                    readmeBody = readmeBody.replace(/\!\[(.*)\]\((?!http)(.*)\)/igm, function (match, g1, g2) {
                         return "![" + g1 + "](" + repos[i].location.replace(/\/?$/, '/')+"raw/master/" + g2 + "?sanitize=true)";
                     });
 

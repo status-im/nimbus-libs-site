@@ -8,7 +8,7 @@ You need:
 
 - a fairly recent [version of NodeJS](https://github.com/nvm-sh/nvm) ([Windows Version](https://github.com/coreybutler/nvm-windows))
 - [yarn](https://yarnpkg.com/en/)
-- [vuepress globally installed](https://vuepress.vuejs.org/)
+- [vuepress globally installed](https://vuepress.vuejs.org/) or locally but for use via npx.
 
 ## Building
 
@@ -19,7 +19,7 @@ cd docgen && yarn install
 vuepress build
 ```
 
-The results of the build process will be in `.vuepress/dist`.
+The results of the build process will be in `docgen/.vuepress/dist`.
 
 ## What's behind the build command
 
@@ -28,11 +28,11 @@ When you run `vuepress build`, the builder:
 - reads `config.json` for the repos it should process.
 - uses the information there to build the homepage by constructing library cards for each repo.
 - for every repo with `update: true`, grabs their `README` file and strips their header and footer (above `Introduction` and below `Contributing`).
-- changes image URLs to match raw ones from Github.
+- changes image URLs to match raw ones from Github if they are hosted on Github.
 - generates frontmatter from the data in `config.json`, combines it with the README and generates a homepage for each library that way.
 - if a `Guides` folder exists in library's subfolder, it will generate a sidebar navigation from its contents.
 
-The logic responsible for this is in a custom plugin in `.vuepress/docgen`.
+The logic responsible for this is in a custom plugin in `.vuepress/docgen/plugin.js`.
 
 ## Modifying for your use case
 

@@ -1,17 +1,6 @@
 {
     "repos": [
         {
-            "name": "nim-rlp",
-            "label": "Nim-RLP",
-            "location": "https://github.com/status-im/nim-rlp",
-            "update": true,
-            "frontMatter": {
-                "sidebar": "auto"
-            },
-            "tags": ["formatting", "encoding", "stable"],
-            "description": "A Nim implementation of the Recursive Length Prefix encoding (RLP) as specified in the Ethereum's [Yellow Papper](https://ethereum.github.io/yellowpaper/paper.pdf) and [Wiki](https://github.com/ethereum/wiki/wiki/RLP)."
-        },
-        {
             "name": "nim-chronicles",
             "label": "Chronicles",
             "location": "https://github.com/status-im/nim-chronicles",
@@ -41,6 +30,17 @@
             "frontMatter": {
                 "sidebar": "auto"
             }
+        },
+        {
+            "name": "nim-libp2p",
+            "label": "Nim-libp2p",
+            "location": "https://github.com/status-im/nim-libp2p",
+            "update": true,
+            "tags": ["libp2p", "networking", "development"],
+            "description": "A Nim wrapper for the Go Libp2p daemon.",
+            "frontMatter": {
+                "sidebar": "auto"
+            }
         }
     ],
     "tags": {
@@ -58,7 +58,14 @@
             "type": "warn"
         },
         "async": {
+
+        },
+        "networking": {
+
+        },
+        "libp2p": {
+            
         }
     },
-    "separators": ["## Introduction|##Intro", "## Contributing", "|"]
+    "separators": ["## Introduction|##Intro", "## Contributing|## License", "|"]
 }
