@@ -1,5 +1,11 @@
 {
   "dependencies": {
     "request": "^2.88.0"
+  },
+  "scripts": {
+    "clearlib": "rm -rf lib/* && touch lib/.gitkeep",
+    "cleardist": "rm -rf ./vuepress/dist",
+    "clearall": "yarn run clearlib && yarn run cleardist",
+    "deploy": "echo 'Coming soon'"
   }
 }

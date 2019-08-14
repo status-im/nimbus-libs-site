@@ -15,10 +15,14 @@
         {
             "name": "nimcrypto",
             "label": "Nimcrypto",
-            "location": "https://github.com/cheatfate/nimcrypto",
-            "update": false,
+            "location": "https://github.com/swader/nimcrypto",
+            "update": true,
+            "subdocs": "## Docs",
             "tags": ["cryptography", "development"],
-            "description": "Nimcrypto is Nim's cryptographic library. It implements several popular cryptographic algorithms and their tests with some [examples](https://github.com/cheatfate/nimcrypto/tree/master/examples)."
+            "description": "Nimcrypto is Nim's cryptographic library. It implements several popular cryptographic algorithms and their tests with some [examples](https://github.com/cheatfate/nimcrypto/tree/master/examples).",
+            "frontMatter": {
+                "sidebar": "auto"
+            }
         },
         {
             "name": "nim-chronos",
@@ -41,6 +45,18 @@
             "frontMatter": {
                 "sidebar": "auto"
             }
+        },
+        {
+            "name": "nim-eth",
+            "label": "Nim-Eth",
+            "location": "https://github.com/status-im/nim-eth",
+            "update": true,
+            "subdocs": "## Docs",
+            "tags": ["eth", "keys", "bloom", "rlp", "encoding", "formatting", "cryptography", "development"],
+            "description": "Ethereum-related utilities written in Nim. Includes things like Bloom filters, private/public key utilities, devp2p, RLP, and more.",
+            "frontMatter": {
+                "sidebar": "auto"
+            }
         }
     ],
     "tags": {
@@ -54,6 +70,14 @@
         },
         "stable": {    
         },
+        "eth": {    
+        },
+        "keys": {    
+        },
+        "bloom": {    
+        },
+        "rlp": {    
+        },
         "development": {
             "type": "warn"
         },
@@ -64,7 +88,7 @@
 
         },
         "libp2p": {
-            
+
         }
     },
     "separators": ["## Introduction|##Intro", "## Contributing|## License", "|"]
