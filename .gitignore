@@ -1,7 +1,10 @@
 docgen/.vuepress/dist
+/.vuepress/dist
 docgen/yarn.lock
 docgen/README.md
 docgen/node_modules/*
+/docgen/lib/*
+!/docgen/lib/.gitkeep
 
 .idea
 *.ipr

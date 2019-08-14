@@ -21,6 +21,8 @@ vuepress build
 
 The results of the build process will be in `docgen/.vuepress/dist`.
 
+> Note: You might have to run `vuepress build` twice, because the first run writes the temporary MD files, while the second run builds HTML from them. We're working on making all that happen in one go and there's a [pending issue in Vuepress](https://github.com/vuejs/vuepress/issues/1613).
+
 ## What's behind the build command
 
 When you run `vuepress build`, the builder:
