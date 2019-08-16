@@ -54,6 +54,7 @@ To generate docs in the same way for your own repos:
     - `update`: when false, only generates content from local MD content, does not try to fetch from online master
     - `tags`: a JS array of tags applying to this lib. Purely aesthetic for now, for the homepage - colored badges will appear next to the lib's name. Add tags into the `tags` object as desired.
     - `subdocs`: see next section
+    - `apiref`: see ApiRef section
     - `description`: description for the homepage
     - `frontmatter`: frontmatter to generate. Key value pairs. Values are same as [documented in Vuepress](https://v1.vuepress.vuejs.org/guide/frontmatter.html).
 2. Also in `config.json`, set up the start and end separators. This indicates where your README's body begins, and where it ends. Useful for avoiding licensing information or CI badges in your human-readable docs. `separators[0]` is the starting point of the readme's body, `separators[1]` is the ending point of the readme's body, and `separators[2]` lets you specify several separators for start and end if your READMEs across projects aren't standardized. The string of each separator will be exploded with `separators[2]` and the first of those which is found in a README is considered the valid separator.
@@ -69,6 +70,20 @@ Those subdocs are assumed to be listed in a subsection with links e.g. `"subdocs
 If these subdocs have H1 level headings, all headings will be moved 1 level lower (i.e. `##` becomes `###`). The subsection will be replaced with a content composed of all subdocs merged into a single file.
 
 @todo currently image URLs are not fixed because it's [not straightforward](https://github.com/status-im/nimbus-docs-suite/issues/6).
+
+### ApiRef
+
+Generating an API reference for a library is a heavy and slow operation, so it needs to be specific. You define it through an object like this:
+
+```json
+"apiref": {
+    "lang": "nim",
+    "mainfile": "nimcrypto.nim",
+    "subfolder": "nimcrypto"
+},
+```
+
+The only supported language is currently `nim` and it requires the `0.20.0` devel version! The mainfile is the entry file through which the generator starts generating the doc, this might be language specific like in the case of Nim. In Nim's case, the JSON is generated in a subfolder, which is specified in the `subfolder` value. For Nim, all three values are required.
 
 ## Enhancing the docs further
 

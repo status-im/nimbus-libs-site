@@ -15,6 +15,11 @@
         {
             "name": "nimcrypto",
             "label": "Nimcrypto",
+            "apiref": {
+                "lang": "nim",
+                "mainfile": "nimcrypto.nim",
+                "subfolder": "htmldocs"
+            },
             "location": "https://github.com/swader/nimcrypto",
             "update": true,
             "subdocs": "## Docs",

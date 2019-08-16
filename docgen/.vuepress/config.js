@@ -10,8 +10,15 @@ var sidebar = {};
 
 for (let i = 0; i < repos.length; i++) {
     let topLevel = {
-        text: repos[i].label,
-        link: "/lib/" + repos[i].name.replace(/\/?$/, '/')
+        text: repos[i].label
+    }
+    if (repos[i].apiref !== undefined) {
+        topLevel['items'] = [
+            {text: "Docs", link: "/lib/" + repos[i].name.replace(/\/?$/, '/')},
+            {text: "API Reference", link: "/lib/" + repos[i].name.replace(/\/?$/, '/') + "api.html"} 
+        ];
+    } else {
+        topLevel['link'] = "/lib/" + repos[i].name.replace(/\/?$/, '/');
     }
     nav.push(topLevel);
 
@@ -54,6 +61,5 @@ module.exports = {
       let sb = [""];
       // for each file in guides, push filename
 
-      // build apiref?
-      // for each file in apiref, push filename
+      // menu for API ref if apiref exists
   }

@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "rimraf": "^3.0.0"
   },
   "scripts": {
     "clearlib": "rm -rf lib/* && touch lib/.gitkeep",

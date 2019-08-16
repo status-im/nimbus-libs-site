@@ -1,7 +1,11 @@
 "use strict";
 
-const request = require('request');
-const fs = require('fs');
+const request = require('request'); // fetching remote files from repos
+const fs = require('fs'); // file system operations like copying, renaming, reading files
+const path = require('path'); // needed for some OS-agnostic file / folder path operations
+const rm = require('rimraf'); // used to synchronously delete the git repos after generating API ref
+
+const { execSync } = require('child_process');
 
 module.exports = {
     ready () {
@@ -110,6 +114,109 @@ module.exports = {
                             //console.log(subdocsContent);
                             readmeBody = readmeBody.replace("--subdocs--", subdocsContent);
                         }
+
+                        if (repos[i].apiref !== undefined) {
+                            switch (repos[i].apiref.lang) {
+                                case "nim":
+                                    try {
+                                    const apiRefTemplateNim = "#### {name} \n\n {description} \n\n```nim{code}\n```\n\n";
+                                    console.log("Starting nimdoc generation for repo " + repos[i].label);
+                                    
+                                    execSync('git clone ' + repos[i].location + " " + repos[i].name, (err, stdout, stderr) => {
+                                        if (err) {
+                                            console.error("Could not launch git clone");
+                                            return;
+                                        }
+                                      
+                                        console.log(`stdout: ${stdout}`);
+                                        console.log(`stderr: ${stderr}`);
+                                    });
+
+                                    // Two passes because jsondoc is kinda broken
+                                    // Bug: https://github.com/nim-lang/Nim/issues/11953
+                                    console.log("Generating docs");
+                                    execSync('nim doc --project ' + repos[i].name + '/' + repos[i].apiref.mainfile);
+                                    console.log("Generating jsondocs");
+                                    execSync('nim jsondoc --project ' + repos[i].name + '/' + repos[i].apiref.mainfile);
+
+                                    console.log("Consuming files");
+
+                                    let dir = repos[i].name + '/' + repos[i].apiref.subfolder;
+
+                                    let jsonFiles = [];
+                                    // Consume main file
+                                    jsonFiles.push(JSON.parse(fs.readFileSync(dir + "/" + repos[i].apiref.mainfile.split(".nim")[0] + ".json")));
+                                    // Consume all other files
+                                    let subdir = dir + "/" + repos[i].apiref.mainfile.split(".nim")[0];
+                                    let files = fs.readdirSync(subdir);
+                                    files.forEach(file => {
+                                        if(/\.json$/.test(file)) {
+                                            let jsonContent = fs.readFileSync(subdir + "/" + file);
+                                            jsonFiles.push(
+                                                JSON.parse(jsonContent)
+                                            );
+                                        }
+                                    });   
+
+                                    console.log("Found " + jsonFiles.length + " doc file to MD-ify");
+                                    let md = "";
+                                    for (let z = 0; z < jsonFiles.length; z++) {
+                                        // Turn each into MD
+                                        console.log(jsonFiles[z].orig + " has " + jsonFiles[z].entries.length + " entries to document.");
+                                        
+                                        let entries = jsonFiles[z].entries;
+
+                                        console.log("Processing " + jsonFiles[z].orig.match(/(\w+)\.nim$/gmi)[0].replace('.nim', ''));
+                                        
+                                        let prefix = (z === 0) ? "# API reference: " : "## ";
+                                        md += prefix + jsonFiles[z].orig.match(/(\w+)\.nim$/gmi)[0].replace('.nim', '') + "\n";
+                                        
+                                        if (entries.length) {
+
+                                            // Sort entries by type like in HTML docs
+                                            let content = {
+                                                "types": "", // skType
+                                                "procs": "", // skProc
+                                                "templates": "" // skTemplate
+                                            }
+ 
+                                            console.log("Working through entries of " + jsonFiles[z].orig);
+
+                                            for (let z1 = 0; z1 < entries.length; z1++) {
+
+                                                let newTpl = apiRefTemplateNim
+                                                    .replace("{description}", entries[z1].description)
+                                                    .replace("{name}", entries[z1].name)
+                                                    .replace("{code}", "\n" + entries[z1].code.trim());
+
+                                                switch(entries[z1].type) {
+                                                    case "skType":
+                                                        content.types += newTpl;
+                                                        break;
+                                                    case "skProc":
+                                                        content.procs += newTpl;
+                                                        break;
+                                                    case "skTemplate":
+                                                        content.templates += newTpl;
+                                                        break;
+                                                    default: break;
+                                                }
+                                            }
+
+                                            md += "### Types\n\n" + content.types + "\n\n---\n\n### Procs\n\n---\n\n" + content.procs + "\n\n---\n\n### Templates\n\n---\n\n" + content.templates + "\n\n";
+                                        }
+                                    }
+                                    
+                                    fs.writeFileSync("lib/" + repos[i].name + "/api.md", "---\nsidebar: auto\n---\n\n" + md);
+                                    rm.sync(repos[i].name);
+                                    break;
+                                } catch (e) {
+                                    console.log(e);
+                                    rm.sync(repos[i].name);
+                                }
+                                default: break;
+                            }
+                        }
     
                         let frontMatter = "";
                         if (repos[i].frontMatter !== undefined) {
@@ -177,3 +284,26 @@ function deepenHeadings(content) {
     }
     return content;
 }
+
+const listDir = (dir, fileList = []) => {
+
+    let files = fs.readdirSync(dir);
+
+    files.forEach(file => {
+        if (fs.statSync(path.join(dir, file)).isDirectory()) {
+            fileList = listDir(path.join(dir, file), fileList);
+        } else {
+            if(/\.html$/.test(file)) {
+                let name = file.split('.')[0].replace(/\s/g, '_') + '.json';
+                let src = path.join(dir, file);
+                let newSrc = path.join(dir, name);
+                fileList.push({
+                    oldSrc: src,
+                    newSrc: newSrc
+                });
+            }
+        }
+    });
+
+    return fileList;
+};
