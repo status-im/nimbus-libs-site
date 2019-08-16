@@ -122,15 +122,14 @@ module.exports = {
                                     const apiRefTemplateNim = "#### {name} \n\n {description} \n\n```nim{code}\n```\n\n";
                                     console.log("Starting nimdoc generation for repo " + repos[i].label);
                                     
-                                    execSync('git clone ' + repos[i].location + " " + repos[i].name, (err, stdout, stderr) => {
-                                        if (err) {
-                                            console.error("Could not launch git clone");
-                                            return;
-                                        }
-                                      
-                                        console.log(`stdout: ${stdout}`);
-                                        console.log(`stderr: ${stderr}`);
-                                    });
+                                    execSync('git clone ' + repos[i].location + " " + repos[i].name);
+
+                                    // Bootstrap if needed
+                                    if (repos[i].apiref.bootstrap !== undefined) {
+                                        process.chdir(repos[i].name);
+                                        console.log(execSync(repos[i].apiref.bootstrap).toString());
+                                        process.chdir('..');
+                                    }
 
                                     // Two passes because jsondoc is kinda broken
                                     // Bug: https://github.com/nim-lang/Nim/issues/11953
@@ -143,14 +142,15 @@ module.exports = {
 
                                     let dir = repos[i].name + '/' + repos[i].apiref.subfolder;
 
-                                    let jsonFiles = [];
+                                    let extension = '.json';
+                                                                        let jsonFiles = [];
                                     // Consume main file
-                                    jsonFiles.push(JSON.parse(fs.readFileSync(dir + "/" + repos[i].apiref.mainfile.split(".nim")[0] + ".json")));
+                                    jsonFiles.push(JSON.parse(fs.readFileSync(dir + "/" + repos[i].apiref.mainfile.split(".nim")[0] + extension)));
                                     // Consume all other files
                                     let subdir = dir + "/" + repos[i].apiref.mainfile.split(".nim")[0];
                                     let files = fs.readdirSync(subdir);
                                     files.forEach(file => {
-                                        if(/\.json$/.test(file)) {
+                                        if(file.indexOf(extension ) > -1) {
                                             let jsonContent = fs.readFileSync(subdir + "/" + file);
                                             jsonFiles.push(
                                                 JSON.parse(jsonContent)

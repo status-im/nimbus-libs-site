@@ -5,6 +5,12 @@
             "label": "Chronicles",
             "location": "https://github.com/status-im/nim-chronicles",
             "update": true,
+            "apiref": {
+                "lang": "nim",
+                "mainfile": "chronicles.nim",
+                "subfolder": "htmldocs",
+                "bootstrap": "nimble install -y"
+            },
             "frontMatter": {
                 "sidebar": "auto"
             },

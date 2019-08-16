@@ -79,11 +79,14 @@ Generating an API reference for a library is a heavy and slow operation, so it n
 "apiref": {
     "lang": "nim",
     "mainfile": "nimcrypto.nim",
-    "subfolder": "nimcrypto"
+    "subfolder": "nimcrypto",
+    "bootstrap": "nimble install -y" // <-- OPTIONAL
 },
 ```
 
-The only supported language is currently `nim` and it requires the `0.20.0` devel version! The mainfile is the entry file through which the generator starts generating the doc, this might be language specific like in the case of Nim. In Nim's case, the JSON is generated in a subfolder, which is specified in the `subfolder` value. For Nim, all three values are required.
+The only supported language is currently `nim` and it requires a version at or above 0.19.6! The mainfile is the entry file through which the generator starts generating the doc, this might be language specific like in the case of Nim. In Nim's case, the JSON is generated in a subfolder, which is specified in the `subfolder` value. For Nim, all three values are required.
+
+If the `bootstrap` option is provided, the generator will run this command verbatim inside the folder of the cloned repo. This is useful for installing dependencies or pre-generating things inside the folder of the lib itself. **Note that if your bootstrap is something like `nimble install -y`, your global nimble folder will be updated! Back it up before launching the generator and then go [yell at @dom96](https://github.com/nim-lang/nimble).**
 
 ## Enhancing the docs further
 
