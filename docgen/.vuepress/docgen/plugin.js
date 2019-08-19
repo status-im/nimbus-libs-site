@@ -5,7 +5,7 @@ const fs = require('fs'); // file system operations like copying, renaming, read
 const path = require('path'); // needed for some OS-agnostic file / folder path operations
 const rm = require('rimraf'); // used to synchronously delete the git repos after generating API ref
 
-const { execSync } = require('child_process');
+const { execSync } = require('child_process'); // to trigger the external processes like cloning or Nim calling
 
 module.exports = {
     ready () {
@@ -258,7 +258,7 @@ module.exports = {
             }
         
             console.log("The main README.md file was saved!");
-        }); 
+        });
     }     
 }
 

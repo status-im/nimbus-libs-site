@@ -72,6 +72,7 @@
             "label": "Nim-Eth",
             "location": "https://github.com/status-im/nim-eth",
             "update": true,
+
             "subdocs": "## Docs",
             "tags": ["eth", "keys", "bloom", "rlp", "encoding", "formatting", "cryptography", "development"],
             "description": "Ethereum-related utilities written in Nim. Includes things like Bloom filters, private/public key utilities, devp2p, RLP, and more.",
