@@ -24,8 +24,6 @@ Each library will (eventually) have four sections: tutorials, overviews, API ref
 - API references contain technical reference for APIs and other aspects of a module's machinery. They describe how it works and how to use it but assume that you have a basic understanding of key concepts. These are auto-generated from the code, and depend heavily on the programmer's verbosity and the technical writer's persistence.
 - How-to guides are recipes. They guide you through the steps involved in addressing key problems and use-cases. They are more advanced, shorter, and more specific than tutorials and assume some previous knowledge.
 
-Each library in this suite will follow the [content ]
-
 ## Get Started
 
 Use the search field in the header, or find a desired library in the sections below. Each library has its own documentation with a full API reference and guides. If you'd like to contribute to these docs with your own work or some corrections, please file issues or PRs [in the Github repo](https://github.com/status-im/nimbus-docs-suite).
