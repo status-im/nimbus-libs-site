@@ -17,7 +17,7 @@ footer: Dual Licensed - MIT & ApacheV2 | Copyright © 2019-present Nimbus Team
 
 # How the Documentation is organized
 
-Each library will (eventually) have four sections: tutorials, overviews, API references and how-to guides.
+Documentation is organized into four categories: tutorials, overviews, API references and how-to guides.
 
 - Tutorials take you by the hand through a series of steps to put a library / module to use. Start here if you’re new to a library.
 - Overviews discuss key topics and concepts at a fairly high level and provide useful background information and explanation. Those are the things you usually see in READMEs of repos.

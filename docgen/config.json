@@ -1,6 +1,22 @@
 {
     "repos": [
         {
+            "name": "nim-libp2p",
+            "label": "libp2p",
+            "location": "https://github.com/status-im/nim-libp2p",
+            "apiref": {
+                "lang": "nim",
+                "mainfile": "libp2p.nim",
+                "subfolder": "htmldocs"
+            },
+            "update": true,
+            "tags": ["libp2p", "networking", "development"],
+            "description": "nim-libp2p is an implementation of the libp2p modular peer-to-peer networking stack based on Chronos",
+            "frontMatter": {
+                "sidebar": "auto"
+            }
+        },
+        {
             "name": "nim-chronicles",
             "label": "Chronicles",
             "location": "https://github.com/status-im/nim-chronicles",
@@ -45,37 +61,34 @@
                 "mainfile": "chronos.nim",
                 "subfolder": "htmldocs"
             },
-            "tags": ["async", "stable"],
+            "tags": ["async", "stable", "networking"],
             "description": "Chronos is an efficient library for asynchronous programming and an alternative to Nim's asyncdispatch.",
             "frontMatter": {
                 "sidebar": "auto"
             }
         },
         {
-            "name": "nim-libp2p",
-            "label": "Nim-libp2p",
-            "location": "https://github.com/status-im/nim-libp2p",
-            "apiref": {
-                "lang": "nim",
-                "mainfile": "libp2p.nim",
-                "subfolder": "htmldocs"
-            },
-            "update": true,
-            "tags": ["libp2p", "networking", "development"],
-            "description": "A Nim wrapper for the Go Libp2p daemon.",
-            "frontMatter": {
-                "sidebar": "auto"
-            }
-        },
-        {
             "name": "nim-eth",
-            "label": "Nim-Eth",
+            "label": "Eth",
             "location": "https://github.com/status-im/nim-eth",
             "update": true,
 
             "subdocs": "## Docs",
             "tags": ["eth", "keys", "bloom", "rlp", "encoding", "formatting", "cryptography", "development"],
             "description": "Ethereum-related utilities written in Nim. Includes things like Bloom filters, private/public key utilities, devp2p, RLP, and more.",
+            "frontMatter": {
+                "sidebar": "auto"
+            }
+        },
+        {
+            "name": "nim-stew",
+            "label": "Eth",
+            "location": "https://github.com/status-im/nim-stew",
+            "update": true,
+
+            "subdocs": "## Docs",
+            "tags": [ "encoding", "formatting", "development", "utilities"],
+            "description": "General-purpose utilities and standard library extensions",
             "frontMatter": {
                 "sidebar": "auto"
             }
@@ -90,15 +103,15 @@
         },
         "logging": {
         },
-        "stable": {    
+        "stable": {
         },
-        "eth": {    
+        "eth": {
         },
-        "keys": {    
+        "keys": {
         },
-        "bloom": {    
+        "bloom": {
         },
-        "rlp": {    
+        "rlp": {
         },
         "development": {
             "type": "warn"
