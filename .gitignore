@@ -1,6 +1,6 @@
 node_modules
+yarn-error.log
 docs/.vuepress/dist
-docs/yarn.lock
 docs/README.md
 /lib/*
 !/lib/.gitkeep
