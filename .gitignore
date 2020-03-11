@@ -2,8 +2,8 @@ node_modules
 docs/.vuepress/dist
 docs/yarn.lock
 docs/README.md
-/docs/lib/*
-!/docs/lib/.gitkeep
+/lib/*
+!/lib/.gitkeep
 
 .idea
 *.ipr
