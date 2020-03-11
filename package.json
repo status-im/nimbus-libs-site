@@ -1,8 +1,8 @@
 {
-  "name": "nimbus-docs-suite",
+  "name": "nimbus-libs-site",
   "version": "1.0.0",
   "description": "A Vuepress-powered documentation generator for Nimbus libraries",
-  "repository": "git@github.com:status-im/nimbus-docs-suite.git",
+  "repository": "git@github.com:status-im/nimbus-libs-site.git",
   "author": "Jakub Sokołowski <jakub@status.im>",
   "license": "MIT",
   "devDependencies": {

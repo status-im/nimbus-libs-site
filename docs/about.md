@@ -18,7 +18,7 @@ We actually do use Nimdoc for the API reference included in each library's docum
 
 ## Contributing
 
-You can contribute to these docs by submitting issues or pull requests in the official repository at [status-im/nimbus-docs-suite](https://github.com/status-im/nimbus-docs-suite).
+You can contribute to these docs by submitting issues or pull requests in the official repository at [status-im/nimbus-libs-site](https://github.com/status-im/nimbus-libs-site).
 
 Keep in mind the following:
 

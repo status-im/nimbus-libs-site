@@ -26,6 +26,6 @@ Documentation is organized into four categories: tutorials, overviews, API refer
 
 ## Get Started
 
-Use the search field in the header, or find a desired library in the sections below. Each library has its own documentation with a full API reference and guides. If you'd like to contribute to these docs with your own work or some corrections, please file issues or PRs [in the Github repo](https://github.com/status-im/nimbus-docs-suite).
+Use the search field in the header, or find a desired library in the sections below. Each library has its own documentation with a full API reference and guides. If you'd like to contribute to these docs with your own work or some corrections, please file issues or PRs [in the Github repo](https://github.com/status-im/nimbus-libs-site).
 
 {{{libraries}}}

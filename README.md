@@ -13,8 +13,8 @@ You need:
 ## Building
 
 ```bash
-git clone https://github.com/status-im/nimbus-docs-suite
-cd nimbus-docs-suite
+git clone https://github.com/status-im/nimbus-libs-site
+cd nimbus-libs-site
 cd docgen && yarn install
 vuepress build
 ```
@@ -69,7 +69,7 @@ Those subdocs are assumed to be listed in a subsection with links e.g. `"subdocs
 
 If these subdocs have H1 level headings, all headings will be moved 1 level lower (i.e. `##` becomes `###`). The subsection will be replaced with a content composed of all subdocs merged into a single file.
 
-@todo currently image URLs are not fixed because it's [not straightforward](https://github.com/status-im/nimbus-docs-suite/issues/6).
+@todo currently image URLs are not fixed because it's [not straightforward](https://github.com/status-im/nimbus-libs-site/issues/6).
 
 ### ApiRef
 
@@ -90,7 +90,7 @@ If the `bootstrap` option is provided, the generator will run this command verba
 
 ## Enhancing the docs further
 
-To further enhance the docs, please consult the [Vuepress docs](https://v1.vuepress.vuejs.org) as underneath it's all just a [Vue](https://vuejs.org) app built by Vuepress. Also check [existing issues](https://github.com/status-im/nimbus-docs-suite/issues).
+To further enhance the docs, please consult the [Vuepress docs](https://v1.vuepress.vuejs.org) as underneath it's all just a [Vue](https://vuejs.org) app built by Vuepress. Also check [existing issues](https://github.com/status-im/nimbus-libs-site/issues).
 
 ## License
 

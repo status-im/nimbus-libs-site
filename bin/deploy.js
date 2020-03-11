@@ -8,7 +8,7 @@ process.on('unhandledRejection', err => { throw err })
 const distDir = 'docs/.vuepress/dist'
 const branch = 'gh-pages'
 const org = 'status-im'
-const repo = 'status-libs-site'
+const repo = 'nimbus-libs-site'
 /* use SSH auth by default */
 var repoUrl = `git@github.com:${org}/${repo}.git`
 
