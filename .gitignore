@@ -1,9 +1,9 @@
 node_modules
-docgen/.vuepress/dist
-docgen/yarn.lock
-docgen/README.md
-/docgen/lib/*
-!/docgen/lib/.gitkeep
+docs/.vuepress/dist
+docs/yarn.lock
+docs/README.md
+/docs/lib/*
+!/docs/lib/.gitkeep
 
 .idea
 *.ipr
