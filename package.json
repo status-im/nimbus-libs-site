@@ -13,8 +13,6 @@
   "scripts": {
     "dev": "vuepress dev docs",
     "build": "vuepress build docs",
-    "cleanlib": "rm -rf lib/* && touch lib/.gitkeep",
-    "cleandist": "rm -rf ./vuepress/dist",
-    "clean": "yarn run clearlib && yarn run cleardist"
+    "clean": "git clean -fxd docs"
   }
 }
