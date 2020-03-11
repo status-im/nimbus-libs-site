@@ -30,6 +30,13 @@ The results of the build process will be in `docgen/.vuepress/dist`.
 - `yarn run cleardist` clears the generated static files
 - `yarn run clearall` clears all the cached content - both MD files and static file
 
+## Deployment
+
+Currently the site is built by Status Jenkins CI:
+
+* `master` is deployed to https://libs.nimbus.team/ by [this CI job](https://ci.status.im/job/misc/job/libs.nimbus.team/)
+* `develop` is deployed to https://dev-libs.nimbus.team/ by [this CI job](https://ci.status.im/job/misc/job/dev-libs.nimbus.team/)
+
 ## What's behind the build command
 
 When you run `vuepress build`, the builder:
