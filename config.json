@@ -82,7 +82,7 @@
         },
         {
             "name": "nim-stew",
-            "label": "Eth",
+            "label": "Stew",
             "location": "https://github.com/status-im/nim-stew",
             "update": true,
 

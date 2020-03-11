@@ -1,8 +1,8 @@
 node_modules
 yarn-error.log
-docs/.vuepress/dist
-docs/README.md
-/lib/*
+/docs/.vuepress/dist
+/docs/README.md
+/docs/lib/*
 !/lib/.gitkeep
 
 .idea

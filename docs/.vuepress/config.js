@@ -12,13 +12,18 @@ for (let i = 0; i < repos.length; i++) {
     let topLevel = {
         text: repos[i].label
     }
-    if (repos[i].apiref !== undefined) {
-        topLevel['items'] = [
-            {text: "Docs", link: "/lib/" + repos[i].name.replace(/\/?$/, '/')},
-            {text: "API Reference", link: "/lib/" + repos[i].name.replace(/\/?$/, '/') + "api.html"} 
-        ];
-    } else {
-        topLevel['link'] = "/lib/" + repos[i].name.replace(/\/?$/, '/');
+    // Broken as fuck
+    //if (repos[i].apiref !== undefined) {
+    //    topLevel['items'] = [
+    //        {text: "Docs", link: "/lib/" + repos[i].name.replace(/\/?$/, '/')},
+    //        {text: "API Reference", link: "/lib/" + repos[i].name.replace(/\/?$/, '/') + "api.html"} 
+    //    ];
+    //} else {
+    //    topLevel['link'] = "/lib/" + repos[i].name.replace(/\/?$/, '/');
+    //}
+    topLevel = {
+      text: repos[i].label,
+      link: "/lib/" + repos[i].name.replace(/\/?$/, '/'),
     }
     nav.push(topLevel);
 
