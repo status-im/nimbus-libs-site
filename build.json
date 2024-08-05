@@ -1,0 +1,15 @@
+{
+    "timestamp": "2024-08-05T08:00:22Z",
+    "git": {
+        "commit": "785125162e1c2c42a99a7a1da95e10b258e91c62",
+        "branch": "origin/deploy-via-caddy-git",
+        "url": "git@github.com:status-im/nimbus-libs-site.git"
+    },
+    "build": {
+        "id": "13",
+        "number": "13",
+        "name": "website/libs.nimbus.team",
+        "slave": "linux-01",
+        "url": "https://ci.infra.status.im/job/website/job/libs.nimbus.team/13/"
+    }
+}
