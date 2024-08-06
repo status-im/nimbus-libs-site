@@ -35,7 +35,9 @@ pipeline {
       steps {
         script {
           sh 'NODE_OPTIONS=--openssl-legacy-provider yarn build'
-          jenkins.genBuildMetaJSON('build/build.json')
+          /* We run it again because VuePress is retarded */
+          sh 'NODE_OPTIONS=--openssl-legacy-provider yarn build'
+          jenkins.genBuildMetaJSON('docs/.vuepress/dist/build.json')
         }
       }
     }
@@ -47,7 +49,7 @@ pipeline {
             ghp-import \
               -b ${deployBranch()} \
               -c ${deployDomain()} \
-              -p build
+              -p docs/.vuepress/dist
           """
          }
       }
