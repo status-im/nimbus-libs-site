@@ -1,0 +1,15 @@
+{
+    "timestamp": "2024-08-06T12:08:29Z",
+    "git": {
+        "commit": "caf48ffac0097762970592fb4c6f1d00a862f5a5",
+        "branch": "origin/master",
+        "url": "git@github.com:status-im/nimbus-libs-site.git"
+    },
+    "build": {
+        "id": "17",
+        "number": "17",
+        "name": "website/libs.nimbus.team",
+        "slave": "linux-01",
+        "url": "https://ci.infra.status.im/job/website/job/libs.nimbus.team/17/"
+    }
+}
