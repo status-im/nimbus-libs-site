@@ -1,22 +1,6 @@
 {
     "repos": [
         {
-            "name": "nim-libp2p",
-            "label": "libp2p",
-            "location": "https://github.com/status-im/nim-libp2p",
-            "apiref": {
-                "lang": "nim",
-                "mainfile": "libp2p.nim",
-                "subfolder": "htmldocs"
-            },
-            "update": true,
-            "tags": ["libp2p", "networking", "development"],
-            "description": "nim-libp2p is an implementation of the libp2p modular peer-to-peer networking stack based on Chronos",
-            "frontMatter": {
-                "sidebar": "auto"
-            }
-        },
-        {
             "name": "nim-chronicles",
             "label": "Chronicles",
             "location": "https://github.com/status-im/nim-chronicles",
@@ -33,39 +17,6 @@
             "tags": ["logging", "stable"],
             "description": "Chronicles is a library for structured logging. It adheres to the philosophy that log files shouldn't be based on formatted text strings, but rather on well-defined event records with arbitrary properties that are easy to read for both humans and machines."
 
-        },
-        {
-            "name": "nimcrypto",
-            "label": "Nimcrypto",
-            "apiref": {
-                "lang": "nim",
-                "mainfile": "nimcrypto.nim",
-                "subfolder": "htmldocs"
-            },
-            "location": "https://github.com/swader/nimcrypto",
-            "update": true,
-            "subdocs": "## Docs",
-            "tags": ["cryptography", "development"],
-            "description": "Nimcrypto is Nim's cryptographic library. It implements several popular cryptographic algorithms and their tests with some [examples](https://github.com/cheatfate/nimcrypto/tree/master/examples).",
-            "frontMatter": {
-                "sidebar": "auto"
-            }
-        },
-        {
-            "name": "nim-chronos",
-            "label": "Chronos",
-            "location": "https://github.com/status-im/nim-chronos",
-            "update": true,
-            "apiref": {
-                "lang": "nim",
-                "mainfile": "chronos.nim",
-                "subfolder": "htmldocs"
-            },
-            "tags": ["async", "stable", "networking"],
-            "description": "Chronos is an efficient library for asynchronous programming and an alternative to Nim's asyncdispatch.",
-            "frontMatter": {
-                "sidebar": "auto"
-            }
         },
         {
             "name": "nim-eth",
