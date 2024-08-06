@@ -1,3 +1,6 @@
+#!/usr/bin/env groovy
+library 'status-jenkins-lib@v1.8.8'
+
 pipeline {
   agent { label 'linux' }
 
@@ -11,19 +14,14 @@ pipeline {
   }
 
   environment {
-    SCP_OPTS = 'StrictHostKeyChecking=no'
-    DEV_HOST = 'jenkins@node-01.do-ams3.proxy.misc.statusim.net'
-    DEV_SITE = 'dev-libs.nimbus.team'
-    GH_USER = 'status-im-auto'
-    GH_MAIL = 'auto@status.im'
+    GIT_COMMITTER_NAME = 'status-im-auto'
+    GIT_COMMITTER_EMAIL = 'auto@status.im'
   }
 
   stages {
     stage('Git Prep') {
       steps {
-        sh "git config user.name ${env.GH_USER}"
-        sh "git config user.email ${env.GH_MAIL}"
-        sh 'yarn run clean'
+        sh 'yarn clean'
       }
     }
 
@@ -35,31 +33,32 @@ pipeline {
 
     stage('Build') {
       steps {
-        /* We run it twice because VuePress is retarded */
-        sh 'yarn run build'
-        sh 'yarn run build'
+        script {
+          sh 'NODE_OPTIONS=--openssl-legacy-provider yarn build'
+          jenkins.genBuildMetaJSON('build/build.json')
+        }
       }
     }
 
-    stage('Publish Prod') {
-      when { expression { env.GIT_BRANCH ==~ /.*master/ } }
+    stage('Publish') {
       steps {
         sshagent(credentials: ['status-im-auto-ssh']) {
-          sh 'yarn run deploy'
-        }
-      }
-    }
-
-    stage('Publish Devel') {
-      when { expression { !(env.GIT_BRANCH ==~ /.*master/) } }
-      steps {
-        sshagent(credentials: ['jenkins-ssh']) {
           sh """
-            rsync -e 'ssh -o ${SCP_OPTS}' -r --delete docs/.vuepress/dist/. \
-              ${env.DEV_HOST}:/var/www/${env.DEV_SITE}/
+            ghp-import \
+              -b ${deployBranch()} \
+              -c ${deployDomain()} \
+              -p build
           """
-        }
+         }
       }
     }
   }
+
+  post {
+    cleanup { cleanWs() }
+  }
 }
+
+def isMasterBranch() { GIT_BRANCH ==~ /.*master/ }
+def deployBranch() { isMasterBranch() ? 'deploy-master' : 'deploy-develop' }
+def deployDomain() { isMasterBranch() ? 'libs.nimbus.team' : 'dev-libs.nimbus.team' }
