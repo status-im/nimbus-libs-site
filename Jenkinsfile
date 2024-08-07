@@ -16,6 +16,7 @@ pipeline {
   environment {
     GIT_COMMITTER_NAME = 'status-im-auto'
     GIT_COMMITTER_EMAIL = 'auto@status.im'
+    NODE_OPTIONS = '--openssl-legacy-provider'
   }
 
   stages {
@@ -34,9 +35,9 @@ pipeline {
     stage('Build') {
       steps {
         script {
-          sh 'NODE_OPTIONS=--openssl-legacy-provider yarn build'
+          sh 'yarn build'
           /* We run it again because VuePress is retarded */
-          sh 'NODE_OPTIONS=--openssl-legacy-provider yarn build'
+          sh 'yarn build'
           jenkins.genBuildMetaJSON('docs/.vuepress/dist/build.json')
         }
       }
