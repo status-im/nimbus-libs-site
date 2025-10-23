@@ -2,7 +2,15 @@
 library 'status-jenkins-lib@v1.8.8'
 
 pipeline {
-  agent { label 'linux' }
+  agent {
+    docker {
+      label 'linuxcontainer'
+      image 'harbor.status.im/infra/ci-build-containers:linux-base-1.0.0'
+      args '--volume=/nix:/nix ' +
+           '--volume=/etc/nix:/etc/nix ' +
+           '--user jenkins'
+    }
+  }
 
   options {
     disableConcurrentBuilds()
@@ -22,22 +30,26 @@ pipeline {
   stages {
     stage('Git Prep') {
       steps {
-        sh 'yarn clean'
+        script {
+          nix.develop('yarn clean', pure: false)
+        }
       }
     }
 
     stage('Install Deps') {
       steps {
-        sh 'yarn install --ignore-optional'
+        script {
+          nix.develop('yarn install --ignore-optional', pure: false)
+        }
       }
     }
 
     stage('Build') {
       steps {
         script {
-          sh 'yarn build'
+          nix.develop('yarn build', pure: false)
           /* We run it again because VuePress is retarded */
-          sh 'yarn build'
+          nix.develop('yarn build', pure: false)
           jenkins.genBuildMetaJSON('docs/.vuepress/dist/build.json')
         }
       }
@@ -46,13 +58,15 @@ pipeline {
     stage('Publish') {
       steps {
         sshagent(credentials: ['status-im-auto-ssh']) {
-          sh """
-            ghp-import \
-              -b ${deployBranch()} \
-              -c ${deployDomain()} \
-              -p docs/.vuepress/dist
-          """
-         }
+          script {
+            nix.develop("""
+              ghp-import \
+                -b ${deployBranch()} \
+                -c ${deployDomain()} \
+                -p docs/.vuepress/dist
+            """, pure: false)
+          }
+        }
       }
     }
   }
