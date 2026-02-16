@@ -29,6 +29,7 @@ The results of the build process will be in `docgen/.vuepress/dist`.
 - `yarn run clearlib` clears the downloaded and generated MD files in `lib`
 - `yarn run cleardist` clears the generated static files
 - `yarn run clearall` clears all the cached content - both MD files and static file
+- `NIMBUS_LIBS=<name1,name2> vuepress build` builds only selected libraries (by `name` or `label`)
 
 ## Deployment
 
@@ -88,6 +89,17 @@ Generating an API reference for a library is a heavy and slow operation, so it n
     "mainfile": "nimcrypto.nim",
     "subfolder": "nimcrypto",
     "bootstrap": "nimble install -y" // <-- OPTIONAL
+},
+```
+
+For repositories with multiple Nim entry files, use `mainfiles`:
+
+```json
+"apiref": {
+    "lang": "nim",
+    "mainfiles": ["eth.nim", "rlp.nim"],
+    "subfolder": "htmldocs",
+    "bootstrap": "nimble install -y"
 },
 ```
 

@@ -6,6 +6,12 @@ const path = require('path'); // needed for some OS-agnostic file / folder path 
 const rm = require('rimraf'); // used to synchronously delete the git repos after generating API ref
 
 const { execSync } = require('child_process'); // to trigger the external processes like cloning or Nim calling
+const selectedLibs = new Set(
+    (process.env.NIMBUS_LIBS || '')
+        .split(',')
+        .map(s => s.trim())
+        .filter(Boolean)
+);
 
 module.exports = {
     ready () {
@@ -26,6 +32,14 @@ module.exports = {
         for (let i = 0; i < repos.length; i++) {
 
             console.log("Processing " + repos[i].label);
+            if (
+                selectedLibs.size > 0 &&
+                !selectedLibs.has(repos[i].name) &&
+                !selectedLibs.has(repos[i].label)
+            ) {
+                console.log("Skipping " + repos[i].label + " because it is not in NIMBUS_LIBS.");
+                continue;
+            }
 
             let tags = repos[i].tags;
             mainReadmeLibs += "::: theorem <a href='/lib/"+repos[i].name.replace(/\/?$/, '/')+"'>"+repos[i].label+"</a>";
@@ -120,108 +134,14 @@ module.exports = {
                             readmeBody = readmeBody.replace("--subdocs--", subdocsContent);
                         }
 
-                        //if (repos[i].apiref !== undefined) {
-                        //    switch (repos[i].apiref.lang) {
-                        //        case "nim":
-                        //            try {
-                        //            const apiRefTemplateNim = "#### {name} \n\n {description} \n\n```nim{code}\n```\n\n";
-                        //            console.log("Starting nimdoc generation for repo " + repos[i].label);
-                        //            
-                        //            execSync('git clone ' + repos[i].location + " " + repos[i].name);
-
-                        //            // Bootstrap if needed
-                        //            if (repos[i].apiref.bootstrap !== undefined) {
-                        //                process.chdir(repos[i].name);
-                        //                console.log(execSync(repos[i].apiref.bootstrap).toString());
-                        //                process.chdir('..');
-                        //            }
-
-                        //            // Two passes because jsondoc is kinda broken
-                        //            // Bug: https://github.com/nim-lang/Nim/issues/11953
-                        //            console.log("Generating docs");
-                        //            execSync('nim doc --project ' + repos[i].name + '/' + repos[i].apiref.mainfile);
-                        //            console.log("Generating jsondocs");
-                        //            execSync('nim jsondoc --project ' + repos[i].name + '/' + repos[i].apiref.mainfile);
-
-                        //            console.log("Consuming files");
-
-                        //            let dir = repos[i].name + '/' + repos[i].apiref.subfolder;
-
-                        //            let extension = '.json';
-                        //                                                let jsonFiles = [];
-                        //            // Consume main file
-                        //            jsonFiles.push(JSON.parse(fs.readFileSync(dir + "/" + repos[i].apiref.mainfile.split(".nim")[0] + extension)));
-                        //            // Consume all other files
-                        //            let subdir = dir + "/" + repos[i].apiref.mainfile.split(".nim")[0];
-                        //            let files = fs.readdirSync(subdir);
-                        //            files.forEach(file => {
-                        //                if(file.indexOf(extension ) > -1) {
-                        //                    let jsonContent = fs.readFileSync(subdir + "/" + file);
-                        //                    jsonFiles.push(
-                        //                        JSON.parse(jsonContent)
-                        //                    );
-                        //                }
-                        //            });   
-
-                        //            console.log("Found " + jsonFiles.length + " doc file to MD-ify");
-                        //            let md = "";
-                        //            for (let z = 0; z < jsonFiles.length; z++) {
-                        //                // Turn each into MD
-                        //                console.log(jsonFiles[z].orig + " has " + jsonFiles[z].entries.length + " entries to document.");
-                        //                
-                        //                let entries = jsonFiles[z].entries;
-
-                        //                console.log("Processing " + jsonFiles[z].orig.match(/(\w+)\.nim$/gmi)[0].replace('.nim', ''));
-                        //                
-                        //                let prefix = (z === 0) ? "# API reference: " : "## ";
-                        //                md += prefix + jsonFiles[z].orig.match(/(\w+)\.nim$/gmi)[0].replace('.nim', '') + "\n";
-                        //                
-                        //                if (entries.length) {
-
-                        //                    // Sort entries by type like in HTML docs
-                        //                    let content = {
-                        //                        "types": "", // skType
-                        //                        "procs": "", // skProc
-                        //                        "templates": "" // skTemplate
-                        //                    }
- 
-                        //                    console.log("Working through entries of " + jsonFiles[z].orig);
-
-                        //                    for (let z1 = 0; z1 < entries.length; z1++) {
-
-                        //                        let newTpl = apiRefTemplateNim
-                        //                            .replace("{description}", entries[z1].description)
-                        //                            .replace("{name}", entries[z1].name)
-                        //                            .replace("{code}", "\n" + entries[z1].code.trim());
-
-                        //                        switch(entries[z1].type) {
-                        //                            case "skType":
-                        //                                content.types += newTpl;
-                        //                                break;
-                        //                            case "skProc":
-                        //                                content.procs += newTpl;
-                        //                                break;
-                        //                            case "skTemplate":
-                        //                                content.templates += newTpl;
-                        //                                break;
-                        //                            default: break;
-                        //                        }
-                        //                    }
-
-                        //                    md += "### Types\n\n" + content.types + "\n\n---\n\n### Procs\n\n---\n\n" + content.procs + "\n\n---\n\n### Templates\n\n---\n\n" + content.templates + "\n\n";
-                        //                }
-                        //            }
-                        //            
-                        //            fs.writeFileSync("lib/" + repos[i].name + "/api.md", "---\nsidebar: auto\n---\n\n" + md);
-                        //            rm.sync(repos[i].name);
-                        //            break;
-                        //        } catch (e) {
-                        //            console.log(e);
-                        //            rm.sync(repos[i].name);
-                        //        }
-                        //        default: break;
-                        //    }
-                        //}
+                        if (repos[i].apiref !== undefined) {
+                            try {
+                                generateApiReference(repos[i]);
+                            } catch (e) {
+                                console.log("Failed API reference generation for " + repos[i].label);
+                                console.log(e);
+                            }
+                        }
     
                         let frontMatter = "";
                         if (repos[i].frontMatter !== undefined) {
@@ -288,6 +208,140 @@ function deepenHeadings(content) {
         content = content.replace(/^#/gmi, "##");
     }
     return content;
+}
+
+function generateApiReference(repo) {
+    if (!repo.apiref || repo.apiref.lang !== "nim") {
+        return;
+    }
+
+    const mainfiles = normalizeMainfiles(repo.apiref);
+    if (!mainfiles.length) {
+        throw new Error("apiref.mainfile or apiref.mainfiles must be provided for " + repo.name);
+    }
+    if (!repo.apiref.subfolder) {
+        throw new Error("apiref.subfolder is required for " + repo.name);
+    }
+
+    const tempRepoDir = ".docgen-apiref-" + repo.name + "-" + Date.now();
+    const cloneTarget = path.join(process.cwd(), tempRepoDir);
+    const libraryOutDir = path.join("docs", "lib", repo.name);
+    const outFile = path.join(libraryOutDir, "api.md");
+
+    console.log("Starting nimdoc generation for repo " + repo.label);
+    execSync("git clone " + repo.location + " " + tempRepoDir, { stdio: "inherit" });
+    try {
+        if (repo.apiref.bootstrap !== undefined) {
+            console.log("Running bootstrap for " + repo.label);
+            execSync(repo.apiref.bootstrap, { cwd: cloneTarget, stdio: "inherit" });
+        }
+
+        let md = "# API reference\n\n";
+        for (let i = 0; i < mainfiles.length; i++) {
+            const mainfile = mainfiles[i];
+            const moduleName = mainfile.replace(/\.nim$/i, "");
+
+            // Two passes because jsondoc can miss symbols otherwise.
+            console.log("Generating docs for " + mainfile);
+            execSync("nim doc --project " + mainfile, { cwd: cloneTarget, stdio: "inherit" });
+            console.log("Generating jsondocs for " + mainfile);
+            execSync("nim jsondoc --project " + mainfile, { cwd: cloneTarget, stdio: "inherit" });
+
+            const jsonFiles = collectNimJsonDocs(cloneTarget, repo.apiref.subfolder, moduleName);
+            md += renderNimJsonDocs(moduleName, jsonFiles);
+        }
+
+        if (!fs.existsSync(libraryOutDir)) {
+            fs.mkdirSync(libraryOutDir, { recursive: true });
+        }
+        fs.writeFileSync(outFile, "---\nsidebar: auto\n---\n\n" + md);
+        console.log("Wrote " + outFile);
+    } finally {
+        rm.sync(tempRepoDir);
+    }
+}
+
+function normalizeMainfiles(apiref) {
+    if (Array.isArray(apiref.mainfiles)) {
+        return apiref.mainfiles.filter(Boolean);
+    }
+    if (typeof apiref.mainfile === "string" && apiref.mainfile.length > 0) {
+        return [apiref.mainfile];
+    }
+    return [];
+}
+
+function collectNimJsonDocs(cloneTarget, subfolder, moduleName) {
+    const extension = ".json";
+    const docsRoot = path.join(cloneTarget, subfolder);
+    const jsonFiles = [];
+
+    const mainJsonPath = path.join(docsRoot, moduleName + extension);
+    if (fs.existsSync(mainJsonPath)) {
+        jsonFiles.push(JSON.parse(fs.readFileSync(mainJsonPath, "utf8")));
+    }
+
+    const subdir = path.join(docsRoot, moduleName);
+    if (fs.existsSync(subdir)) {
+        const files = fs.readdirSync(subdir);
+        files.forEach(file => {
+            if (file.endsWith(extension)) {
+                jsonFiles.push(JSON.parse(fs.readFileSync(path.join(subdir, file), "utf8")));
+            }
+        });
+    }
+
+    return jsonFiles;
+}
+
+function renderNimJsonDocs(moduleName, jsonFiles) {
+    let md = "## " + moduleName + "\n\n";
+    if (!jsonFiles.length) {
+        return md + "_No generated API docs found._\n\n";
+    }
+
+    const apiRefTemplateNim = "#### {name}\n\n{description}\n\n```nim\n{code}\n```\n\n";
+    for (let z = 0; z < jsonFiles.length; z++) {
+        const doc = jsonFiles[z] || {};
+        const entries = Array.isArray(doc.entries) ? doc.entries : [];
+        const origin = (doc.orig || moduleName).toString();
+        md += "### " + origin.replace(/^.*[\\/]/, "").replace(/\.nim$/i, "") + "\n\n";
+        if (!entries.length) {
+            md += "_No exported entries._\n\n";
+            continue;
+        }
+
+        const content = {
+            types: "",
+            procs: "",
+            templates: ""
+        };
+        for (let i = 0; i < entries.length; i++) {
+            const entry = entries[i] || {};
+            const newTpl = apiRefTemplateNim
+                .replace("{description}", (entry.description || "").trim())
+                .replace("{name}", entry.name || "<unnamed>")
+                .replace("{code}", ((entry.code || "").trim()));
+            switch (entry.type) {
+                case "skType":
+                    content.types += newTpl;
+                    break;
+                case "skProc":
+                    content.procs += newTpl;
+                    break;
+                case "skTemplate":
+                    content.templates += newTpl;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        md += "#### Types\n\n" + (content.types || "_None._\n\n");
+        md += "#### Procs\n\n" + (content.procs || "_None._\n\n");
+        md += "#### Templates\n\n" + (content.templates || "_None._\n\n");
+    }
+    return md + "\n";
 }
 
 const listDir = (dir, fileList = []) => {
