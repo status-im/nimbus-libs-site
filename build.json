@@ -1,15 +1,15 @@
 {
-    "timestamp": "2025-10-23T12:31:42Z",
+    "timestamp": "2026-02-18T08:29:55Z",
     "git": {
-        "commit": "372795f8db5afeb842dc36b91de2bc98bf50705b",
+        "commit": "5095f8cd9a50280ad4bd554a590bf44b42547c05",
         "branch": "origin/master",
         "url": "git@github.com:status-im/nimbus-libs-site.git"
     },
     "build": {
-        "id": "20",
-        "number": "20",
+        "id": "21",
+        "number": "21",
         "name": "website/libs.nimbus.team",
-        "slave": "linux-02-container",
-        "url": "https://ci.infra.status.im/job/website/job/libs.nimbus.team/20/"
+        "slave": "linux-01",
+        "url": "https://ci.infra.status.im/job/website/job/libs.nimbus.team/21/"
     }
 }
