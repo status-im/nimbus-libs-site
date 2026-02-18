@@ -2,9 +2,9 @@
 home: true
 heroImage: /assets/img/hero.png
 heroText: Nimbus Libraries
-tagline: Documentation for Nim libraries produced by the Nimbus team
-actionText: Learn more
-actionLink: /about
+tagline: "[DEPRECATED] Documentation for Nim libraries produced by the Nimbus team. Do not refer to these docs, they're outdated. For the up-to-date docs, check the project repositories on GitHub."
+actionText: "View projects on GitHub"
+actionLink: "https://github.com/orgs/status-im/repositories?q=language:Nim"
 features:
 - title: Performance
   details: Leveraging Nim's performance makes these components significantly faster than their non-Nim counterparts

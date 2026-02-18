@@ -1,5 +1,16 @@
 # Nimbus Docs Suite
 
+---
+
+**[DEPRECATED]**
+
+Do not refer to these docs, they're outdated. For the up-to-date docs, check the project repositories on GitHub:
+
+- [status-im](https://github.com/orgs/status-im/repositories?q=language:Nim)
+- [vacp2p](https://github.com/orgs/vacp2p/repositories?q=language:Nim)
+
+---
+
 This a documentation generator for Nimbus Libraries at [nimbus-libs.status.im](https://nimbus-libs.status.im). It's made to auto-regenerate from master on all the repos you want documented but at the same time supports custom content and theming. It uses [Vuepress](https://v1.vuepress.vuejs.org) behind the scenes.
 
 ## Dependencies
